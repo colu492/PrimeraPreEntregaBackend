@@ -1,14 +1,13 @@
 [
-  {
-    "id": 1
-  },
-  {
-    "id": 2
-  },
-  {
-    "id": 3
-  },
-  {
-    "id": 4
-  }
+    {
+        "id": 1,
+        "title": "Gollo 0034",
+        "description": "This Gollo NFT grants you an exclusive pass to the grower academy on our website.",
+        "price": 999.00,
+        "thumbnail": "https://dl.openseauserdata.com/cache/originImage/files/a60815d24f0d96b51ebbf12640470bc6.png",
+        "code": "abc123",
+        "status": true,
+        "category": "Raro",
+        "stock": 25
+    }
 ]
