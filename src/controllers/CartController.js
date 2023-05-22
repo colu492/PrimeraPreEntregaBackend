@@ -1,4 +1,4 @@
-const CartManager = require('../helpers/CartManager');
+const CartManager = require('../dao/helpers/CartManager');
 
 module.exports = {
     createCart: (req, res) => {

@@ -1,4 +1,4 @@
-const ProductManager = require('../helpers/ProductManager.js');
+const ProductManager = require('../dao/helpers/ProductManager.js');
 
 module.exports = {
     getAllProducts: (req, res) => {

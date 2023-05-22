@@ -1,12 +1,14 @@
 const express = require('express');
-const app = express();
 const expressHandlebars = require('express-handlebars')
 const { Server } = require ('socket.io')
 const fs = require ('fs')
 const http = require('http')
+const mongoose = require('mongoose');
 
+const app = express();
 const server = http.createServer(app)
 const io = new Server(server)
+const uri = 'mongodb+srv://colu492:colu159159@cluster0.rg7h0p9.mongodb.net/'
 
 // Importar los routers de productos y carritos
 const productsRouter = require('./router/products.router.js');
@@ -19,6 +21,7 @@ app.set('views', 'src/views')
 // Configurar el middleware para parsear el body de las peticiones
 app.use(express.static('./src/public'))
 app.use(express.json());
+app.use(express.urlencoded({ extended: true}))
 app.use((req, res, next) => {
     if (req.url.endsWith('.js')) {
     res.setHeader('Content-Type', 'application/javascript');
@@ -58,7 +61,14 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(8080, ()=>console.log("server up"))
+mongoose.set('strictQuery', false)
+async function startServer() {
+    await mongoose.connect(uri)
+    console.log('Conectado a DB')
+    server.listen(8080, ()=>console.log("server up"))
+} 
+startServer()
+
 
 async function getProductList() {
     return new Promise((resolve, reject) => {

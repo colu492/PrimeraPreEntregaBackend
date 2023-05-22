@@ -2,9 +2,31 @@
   "dependencies": {
     "express": "^4.18.2",
     "express-handlebars": "^7.0.7",
+    "mongoose": "^7.2.0",
     "node": "^19.8.1",
     "nodemon": "^2.0.22",
     "socket.io": "^4.6.1",
     "socket.io-client": "^4.6.1"
-  }
+  },
+  "name": "primerapreentregabackend",
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node .",
+    "dev":"nodemon .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colu492/PrimeraPreEntregaBackend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colu492/PrimeraPreEntregaBackend/issues"
+  },
+  "homepage": "https://github.com/colu492/PrimeraPreEntregaBackend#readme",
+  "description": ""
 }
