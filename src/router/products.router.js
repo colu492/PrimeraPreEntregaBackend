@@ -2,8 +2,55 @@ const express = require('express');
 const io = require ('../app.js')
 const socket = require('../public/js/realTimeProducts.js')
 const router = express.Router();
+const productsModel = require('../dao/models/products.model.js')
+
 const ProductController = require('../controllers/ProductController.js');
 
+
+router.get('/', async (req, res) => {
+    const products = await productsModel.find().lean().exec()
+    res.render('list', {products})
+})
+router.get('/create', (req, res) => {
+    res.render('create', {})
+})
+router.get('/:title', async (req, res)=> {
+    const title = req.params.title
+    const products = await productsModel.findOne({title}).lean().exec()
+    res.render('one', {
+        products
+    })
+})
+router.post('/', async (req,res) => {
+    const productNew = req.body
+    const productGenerated = new productsModel(productNew)
+    await productGenerated.save()
+    res.redirect(`/products/${productGenerated.title}`)
+})
+
+router.put('/:title', async (req, res) => {
+    const title = req.params.title
+    console.log(title)
+    const productNewData = req.body
+    console.log(productNewData)
+    try {
+        await productsModel.updateOne({ title }, { ...productNewData })
+    } catch(err) {
+        console.log('error.....')
+        res.send({err})
+    }
+})
+
+router.delete('/:title', async (req, res) => {
+    const title = req.params.title
+    try {
+        await productsModel.deleteOne({ title })
+        res.send(`Producto ${title} borrado exitosamente!`)
+    } catch (err) {
+        res.send({err})
+    }
+})
+/*
 router.get('/',(req, res)=>{
 
     const limit = req.query.limit
@@ -79,4 +126,5 @@ router.delete('/:pid', async (req, res) => {
     
         res.status(200).json({ message: 'Deleting product...' });
     });
+    */
 module.exports = router

@@ -5,10 +5,10 @@ const fs = require ('fs')
 const http = require('http')
 const mongoose = require('mongoose');
 
+const uri = 'mongodb+srv://colu492:colu159159@cluster0.rg7h0p9.mongodb.net/'
 const app = express();
 const server = http.createServer(app)
 const io = new Server(server)
-const uri = 'mongodb+srv://colu492:colu159159@cluster0.rg7h0p9.mongodb.net/'
 
 // Importar los routers de productos y carritos
 const productsRouter = require('./router/products.router.js');
@@ -30,8 +30,8 @@ app.use((req, res, next) => {
 });
 
 // Configurar los endpoints de productos y carritos
-app.use('/api/products', productsRouter);
-app.use('/api/carts', cartsRouter);
+app.use('/products', productsRouter);
+app.use('/carts', cartsRouter);
 
 app.get('/', (req, res) => {
     const products = getProductList();
