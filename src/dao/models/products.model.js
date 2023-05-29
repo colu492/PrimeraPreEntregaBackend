@@ -3,12 +3,19 @@ const mongoose = require ('mongoose');
 const productsCollection = 'productos'
 
 const productsSchema = mongoose.Schema({
-    title: String,
-    description: String,
-    price: Number,
-    category: String
 
-})
+    product:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        require: true
+    },
+    quantity: {
+        type: Number,
+        required: true,
+        default: 1
+    },
+
+});
 
 const productsModel = mongoose.model(productsCollection, productsSchema)
 

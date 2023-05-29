@@ -8,8 +8,48 @@ const ProductController = require('../controllers/ProductController.js');
 
 
 router.get('/', async (req, res) => {
-    const products = await productsModel.find().lean().exec()
-    res.render('list', {products})
+    const { limit = 10, page = 1, sort, query } = req.query;
+
+    const filters = {};
+    if (query && query.category) {
+        filters.category = query.category;
+    }
+    try {
+        const totalCount = await productsModel.countDocuments(filters);
+        const totalPages = Math.ceil(totalCount / limit);
+        const skip = (page - 1) * limit;
+
+        let productsQuery = productsModel.find(filters).skip(skip).limit(limit);
+        if ( sort === 'asc') {
+            productsQuery = productsQuery.sort({ price: 1 })
+        }
+        else if ( sort === 'desc' ) {
+            productsQuery = productsQuery.sort({ price: -1 });
+        }
+        const products = await productsQuery.lean().exec();
+        const prevPage = page > 1 ? page - 1 : null;
+        const nextPage = page < totalPages ? page + 1 : null;
+        const hasPrevPage = prevPage !== null;
+        const hasNextPage = nextPage !== null;
+
+        const response = {
+            status: 'success',
+            payload: products,
+            totalPages,
+            prevPage,
+            nextPage,
+            page,
+            hasPrevPage,
+            hasNextPage,
+            prevLink: hasPrevPage ? createPageLink(prevPage, limit, sort, query) : null,
+            nextLink: hasNextPage ? createPageLink(nextPage, limit, sort, query) : null,
+
+        }
+        res.render('list', {products: response });
+    } catch (err){
+        console.error(err);
+        res.render('error', { message: 'Error al obtener los productos.'});
+    }
 })
 router.get('/create', (req, res) => {
     res.render('create', {})

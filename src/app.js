@@ -1,9 +1,10 @@
 const express = require('express');
 const expressHandlebars = require('express-handlebars')
 const { Server } = require ('socket.io')
-const fs = require ('fs')
 const http = require('http')
+const fs = require('fs');
 const mongoose = require('mongoose');
+
 
 const uri = 'mongodb+srv://colu492:colu159159@cluster0.rg7h0p9.mongodb.net/'
 const app = express();
@@ -15,8 +16,8 @@ const productsRouter = require('./router/products.router.js');
 const cartsRouter = require('./router/carts.router.js');
 
 app.engine('handlebars', expressHandlebars.engine())
-app.set('view engine', 'handlebars')
 app.set('views', 'src/views')
+app.set('view engine', 'handlebars')
 
 // Configurar el middleware para parsear el body de las peticiones
 app.use(express.static('./src/public'))
