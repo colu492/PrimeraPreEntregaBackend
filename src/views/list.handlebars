@@ -10,7 +10,7 @@ function deleteProduct(title) {
     Listando los productos desde Handlebars...
 </div>
 <div>
-    <ul id="productos">
+    <ul id="products">
     {{#each products}}
     <li>{{this.title}} - {{this.category}}  </li>
     <a href="products/{{this.title}}"></a>
